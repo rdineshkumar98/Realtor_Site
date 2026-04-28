@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDK Digital Properties — Premium Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;
+  --gold-light:#E8D5A0;
+  --gold-dark:#9A7A32;
+  --navy:#0D1B2A;
+  --navy-light:#1A2E45;
+  --navy-mid:#243B55;
+  --slate:#4A5568;
+  --light:#F8F6F1;
+  --white:#FFFFFF;
+  --gray-100:#F7F7F5;
+  --gray-200:#E8E5DF;
+  --gray-400:#9A9589;
+  --text-dark:#1A1A1A;
+  --text-mid:#4A4A4A;
+  --success:#2D7D46;
+  --danger:#C0392B;
+}
+html{scroll-behavior:smooth;font-family:'DM Sans',sans-serif}
+body{background:var(--white);color:var(--text-dark);min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(13,27,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);font-weight:700;cursor:pointer;letter-spacing:0.02em}
+.nav-logo span{color:var(--white)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.875rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--navy);padding:0.5rem 1.25rem;border-radius:4px;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.2s}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+/* PAGES */
+.page{display:none;padding-top:70px;min-height:100vh}
+.page.active{display:block}
+
+/* HERO */
+.hero{position:relative;height:calc(100vh - 70px);display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 40%,#1a3a5c 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,var(--gold) 60px,var(--gold) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,var(--gold) 60px,var(--gold) 61px)}
+.hero-accent{position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.12) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 2rem;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);padding:0.4rem 1rem;border-radius:100px;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--white);line-height:1.15;margin-bottom:1.5rem;max-width:700px}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p{color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:520px;line-height:1.8;margin-bottom:2.5rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--navy);padding:0.875rem 2rem;border-radius:4px;font-size:0.875rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.25s}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--white);padding:0.875rem 2rem;border-radius:4px;font-size:0.875rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,0.3);transition:all 0.25s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1)}
+.stat-item .num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700}
+.stat-item .lbl{font-size:0.8rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.25rem}
+
+/* SEARCH BAR */
+.search-bar-wrap{background:var(--white);border-radius:12px;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.2);margin-top:2rem;max-width:800px}
+.search-tabs{display:flex;gap:0.5rem;margin-bottom:1rem}
+.stab{padding:0.4rem 1rem;border-radius:100px;font-size:0.8rem;font-weight:600;cursor:pointer;letter-spacing:0.03em;border:none;background:var(--gray-100);color:var(--slate);transition:all 0.2s}
+.stab.active{background:var(--navy);color:var(--white)}
+.search-inputs{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.75rem;align-items:end}
+.sinput label{font-size:0.7rem;color:var(--slate);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.35rem;display:block}
+.sinput select,.sinput input{width:100%;padding:0.6rem 0.75rem;border:1px solid var(--gray-200);border-radius:6px;font-size:0.875rem;color:var(--text-dark);background:var(--white);font-family:inherit;outline:none}
+.sinput select:focus,.sinput input:focus{border-color:var(--gold)}
+.search-btn{background:var(--gold);color:var(--navy);padding:0.65rem 1.5rem;border-radius:6px;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border:none;white-space:nowrap;transition:all 0.2s}
+.search-btn:hover{background:var(--gold-dark);color:var(--white)}
+
+/* SECTIONS */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.15em;font-weight:600;margin-bottom:0.75rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.75rem);color:var(--text-dark);line-height:1.2;margin-bottom:1rem}
+.section-sub{color:var(--slate);font-size:1rem;line-height:1.8;max-width:560px;font-weight:300}
+.section-header{margin-bottom:3rem}
+.section-header.center{text-align:center}
+.section-header.center .section-sub{margin:0 auto}
+
+/* PROPERTY CARDS */
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem}
+.prop-card{background:var(--white);border-radius:12px;overflow:hidden;border:1px solid var(--gray-200);transition:all 0.3s;cursor:pointer}
+.prop-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.12);border-color:var(--gold-light)}
+.prop-img{height:220px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%)}
+.prop-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.4}
+.prop-badge{position:absolute;top:1rem;left:1rem;background:var(--gold);color:var(--navy);padding:0.3rem 0.75rem;border-radius:4px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.prop-badge.rent{background:var(--navy);color:var(--gold)}
+.prop-fav{position:absolute;top:1rem;right:1rem;width:32px;height:32px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.875rem;transition:all 0.2s}
+.prop-fav:hover{background:var(--white);transform:scale(1.1)}
+.prop-body{padding:1.25rem}
+.prop-price{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--gold);font-weight:800;margin-bottom:0.35rem;letter-spacing:0.02em}
+.prop-name{font-size:1rem;font-weight:600;color:var(--text-dark);margin-bottom:0.25rem}
+.prop-loc{font-size:0.825rem;color:var(--slate);margin-bottom:1rem;display:flex;align-items:center;gap:0.35rem}
+.prop-feats{display:flex;gap:1rem;padding-top:1rem;border-top:1px solid var(--gray-200)}
+.prop-feat{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--slate)}
+.prop-feat strong{color:var(--text-dark);font-weight:600}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2rem}
+.why-card{padding:2rem;border-radius:12px;border:1px solid var(--gray-200);transition:all 0.3s;position:relative;overflow:hidden}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+.why-card:hover{border-color:var(--gold-light);transform:translateY(-4px)}
+.why-card:hover::before{transform:scaleX(1)}
+.why-icon{width:52px;height:52px;background:var(--light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;border:1px solid var(--gray-200)}
+.why-card h3{font-size:1rem;font-weight:600;margin-bottom:0.5rem;color:var(--text-dark)}
+.why-card p{font-size:0.875rem;color:var(--slate);line-height:1.7;font-weight:300}
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem}
+.testi-card{background:var(--navy);color:var(--white);padding:2rem;border-radius:12px;position:relative}
+.testi-quote{font-size:2rem;color:var(--gold);line-height:1;margin-bottom:1rem;font-family:'Playfair Display',serif}
+.testi-text{font-size:0.9rem;line-height:1.8;color:rgba(255,255,255,0.8);font-weight:300;margin-bottom:1.5rem}
+.testi-author{display:flex;align-items:center;gap:0.75rem}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:700;font-size:0.875rem;flex-shrink:0}
+.testi-name{font-weight:600;font-size:0.875rem}
+.testi-role{font-size:0.75rem;color:rgba(255,255,255,0.5)}
+.stars{color:var(--gold);font-size:0.875rem;margin-bottom:0.75rem}
+
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(201,168,76,0.03) 30px,rgba(201,168,76,0.03) 31px)}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.75rem);color:var(--white);margin-bottom:1rem;position:relative}
+.cta-section p{color:rgba(255,255,255,0.7);margin-bottom:2rem;font-size:1rem;font-weight:300;position:relative}
+.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* LISTINGS PAGE */
+.page-hero{background:var(--navy);padding:4rem 2rem;text-align:center}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--white);margin-bottom:0.5rem}
+.page-hero p{color:rgba(255,255,255,0.6);font-weight:300}
+.breadcrumb{color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:0.75rem}
+.breadcrumb span{color:var(--gold)}
+.filters-bar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:1rem 2rem;position:sticky;top:70px;z-index:100}
+.filters-inner{max-width:1200px;margin:0 auto;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.filter-select{padding:0.5rem 0.75rem;border:1px solid var(--gray-200);border-radius:6px;font-size:0.8rem;color:var(--text-dark);background:var(--white);font-family:inherit;outline:none;cursor:pointer;min-width:120px}
+.filter-select:focus{border-color:var(--gold)}
+.filter-sort{margin-left:auto;display:flex;gap:0.5rem;align-items:center;font-size:0.8rem;color:var(--slate)}
+.sort-btn{padding:0.4rem 0.75rem;border:1px solid var(--gray-200);border-radius:4px;font-size:0.75rem;cursor:pointer;background:var(--white);color:var(--slate);font-family:inherit;transition:all 0.2s}
+.sort-btn:hover,.sort-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.results-count{font-size:0.875rem;color:var(--slate)}
+
+/* DETAIL PAGE */
+.detail-gallery{display:grid;grid-template-columns:2fr 1fr;gap:0.75rem;height:420px;border-radius:12px;overflow:hidden}
+.gallery-main{background:linear-gradient(135deg,var(--navy),var(--navy-mid));display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:0.5}
+.gallery-thumbs{display:grid;grid-template-rows:repeat(3,1fr);gap:0.75rem}
+.gallery-thumb{background:linear-gradient(135deg,#1e3a5c,#2d527a);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:2rem;opacity:0.4;cursor:pointer;transition:opacity 0.2s}
+.gallery-thumb:hover{opacity:0.7}
+.detail-grid{display:grid;grid-template-columns:1fr 380px;gap:2rem;margin-top:2rem}
+.detail-main .price{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--gold);font-weight:800;margin-bottom:0.25rem;letter-spacing:0.02em}
+.detail-main h1{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--text-dark);margin-bottom:0.5rem}
+.detail-main .location{color:var(--slate);font-size:0.9rem;margin-bottom:1.5rem}
+.feat-pills{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem}
+.feat-pill{background:var(--light);border:1px solid var(--gray-200);padding:0.5rem 1rem;border-radius:6px;font-size:0.8rem;color:var(--text-mid);font-weight:500}
+.amenities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:1rem}
+.amenity{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--slate);padding:0.5rem;border-radius:4px;background:var(--gray-100)}
+.amenity::before{content:'✓';color:var(--gold);font-weight:700;font-size:0.75rem}
+.inquiry-card{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:1.5rem;position:sticky;top:90px}
+.inquiry-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:1.25rem;color:var(--text-dark)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:0.35rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:0.65rem 0.875rem;border:1px solid var(--gray-200);border-radius:6px;font-size:0.875rem;font-family:inherit;outline:none;transition:border-color 0.2s;background:var(--white);color:var(--text-dark)}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:80px}
+.btn-submit{width:100%;background:var(--gold);color:var(--navy);padding:0.875rem;border:none;border-radius:6px;font-size:0.875rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;margin-top:0.5rem;transition:all 0.2s;font-family:inherit}
+.btn-submit:hover{background:var(--gold-dark);color:var(--white);transform:translateY(-1px)}
+
+/* MORTGAGE CALC */
+.mortgage-card{background:var(--light);border-radius:12px;padding:1.5rem;margin-top:2rem;border:1px solid var(--gray-200)}
+.mortgage-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1.25rem}
+.mortgage-result{background:var(--navy);color:var(--white);border-radius:8px;padding:1rem;text-align:center;margin-top:1rem}
+.mortgage-result .amount{font-family:'Playfair Display',serif;font-size:2.1rem;color:var(--gold);font-weight:800;letter-spacing:0.02em}
+.mortgage-result .label{font-size:0.75rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.08em}
+
+/* ABOUT PAGE */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2rem}
+.team-card{text-align:center;padding:2rem;border-radius:12px;border:1px solid var(--gray-200);transition:all 0.3s}
+.team-card:hover{border-color:var(--gold-light);transform:translateY(-4px)}
+.team-avatar{width:100px;height:100px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;border:3px solid var(--gold-light)}
+.team-name{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.25rem}
+.team-role{font-size:0.8rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;font-weight:600}
+.team-bio{font-size:0.8rem;color:var(--slate);line-height:1.7;font-weight:300}
+.team-socials{margin-top:1rem;display:flex;justify-content:center;gap:0.5rem}
+.social-btn{width:32px;height:32px;border-radius:50%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:0.75rem;cursor:pointer;color:var(--slate);border:1px solid var(--gray-200);transition:all 0.2s}
+.social-btn:hover{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+
+/* BLOG */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem}
+.blog-card{border-radius:12px;overflow:hidden;border:1px solid var(--gray-200);cursor:pointer;transition:all 0.3s}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.08)}
+.blog-img{height:180px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:0.5;position:relative}
+.blog-cat{position:absolute;top:1rem;left:1rem;background:var(--gold);color:var(--navy);padding:0.25rem 0.75rem;border-radius:4px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.blog-body{padding:1.25rem}
+.blog-date{font-size:0.75rem;color:var(--slate);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.blog-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.5rem;color:var(--text-dark);line-height:1.4}
+.blog-excerpt{font-size:0.825rem;color:var(--slate);line-height:1.7;font-weight:300}
+.blog-read{display:inline-block;margin-top:1rem;font-size:0.8rem;color:var(--gold);font-weight:600;text-decoration:none}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1.5rem}
+.contact-items{display:flex;flex-direction:column;gap:1.5rem}
+.contact-item{display:flex;gap:1rem;align-items:flex-start}
+.contact-icon{width:44px;height:44px;background:var(--light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--gray-200)}
+.contact-label{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:0.25rem}
+.contact-val{font-size:0.95rem;font-weight:500;color:var(--text-dark)}
+.map-placeholder{height:280px;background:linear-gradient(135deg,#e8f0f7,#d0dfe8);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-top:2rem;border:1px solid var(--gray-200);color:var(--slate);font-size:0.875rem;flex-direction:column;gap:0.5rem}
+.whatsapp-btn{background:#25D366;color:var(--white);padding:0.75rem 1.5rem;border-radius:8px;border:none;font-size:0.875rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:0.5rem;margin-top:1.5rem;font-family:inherit;transition:all 0.2s}
+.whatsapp-btn:hover{background:#1eb957;transform:translateY(-1px)}
+
+/* ADMIN DASHBOARD */
+.admin-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 70px)}
+.admin-sidebar{background:var(--navy);padding:1.5rem 0;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto}
+.admin-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:1rem}
+.admin-logo p{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:0.25rem}
+.admin-logo span{color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
+.sidebar-label{padding:0 1.5rem;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.3);margin:1.25rem 0 0.5rem}
+.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 1.5rem;color:rgba(255,255,255,0.65);font-size:0.85rem;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent}
+.sidebar-item:hover{background:rgba(255,255,255,0.05);color:var(--white)}
+.sidebar-item.active{background:rgba(201,168,76,0.1);color:var(--gold);border-left-color:var(--gold)}
+.sidebar-icon{font-size:1rem;width:20px;text-align:center}
+.admin-main{background:var(--gray-100);padding:2rem;overflow-y:auto}
+.admin-panel{display:none}
+.admin-panel.active{display:block}
+.admin-header{margin-bottom:2rem}
+.admin-header h1{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--text-dark);margin-bottom:0.25rem}
+.admin-header p{font-size:0.875rem;color:var(--slate)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2rem}
+.stat-card{background:var(--white);border-radius:10px;padding:1.25rem;border:1px solid var(--gray-200)}
+.stat-card .s-label{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:0.5rem}
+.stat-card .s-val{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--text-dark);font-weight:700}
+.stat-card .s-change{font-size:0.75rem;color:var(--success);margin-top:0.25rem}
+.stat-card .s-change.down{color:var(--danger)}
+.stat-card .s-icon{font-size:1.5rem;margin-bottom:0.5rem}
+.admin-card{background:var(--white);border-radius:10px;padding:1.5rem;border:1px solid var(--gray-200);margin-bottom:1.5rem}
+.admin-card h2{font-size:1rem;font-weight:600;margin-bottom:1.25rem;color:var(--text-dark)}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{text-align:left;padding:0.65rem 0.75rem;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);border-bottom:1px solid var(--gray-200);background:var(--gray-100)}
+.admin-table td{padding:0.875rem 0.75rem;font-size:0.85rem;border-bottom:1px solid var(--gray-200);color:var(--text-mid)}
+.admin-table tr:hover td{background:var(--gray-100)}
+.status-badge{padding:0.25rem 0.65rem;border-radius:4px;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+.status-badge.active{background:#d4edda;color:#155724}
+.status-badge.pending{background:#fff3cd;color:#856404}
+.status-badge.sold{background:#f8d7da;color:#721c24}
+.action-btns{display:flex;gap:0.5rem}
+.act-btn{padding:0.3rem 0.65rem;border-radius:4px;font-size:0.7rem;cursor:pointer;font-family:inherit;font-weight:600;border:none;transition:all 0.2s}
+.act-btn.edit{background:var(--light);color:var(--navy);border:1px solid var(--gray-200)}
+.act-btn.edit:hover{background:var(--navy);color:var(--white)}
+.act-btn.del{background:#fff0f0;color:var(--danger)}
+.act-btn.del:hover{background:var(--danger);color:var(--white)}
+.act-btn.view{background:rgba(201,168,76,0.1);color:var(--gold-dark)}
+.act-btn.view:hover{background:var(--gold);color:var(--navy)}
+.add-btn{background:var(--navy);color:var(--white);padding:0.6rem 1.25rem;border-radius:6px;font-size:0.8rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;transition:all 0.2s}
+.add-btn:hover{background:var(--navy-mid)}
+.analytics-chart{height:120px;background:linear-gradient(180deg,rgba(201,168,76,0.1) 0%,transparent 100%);border-radius:8px;position:relative;overflow:hidden;margin:1rem 0}
+.chart-bars{display:flex;align-items:flex-end;justify-content:space-around;height:100%;padding:0.75rem}
+.chart-bar{background:linear-gradient(0deg,var(--gold),var(--gold-light));border-radius:3px 3px 0 0;width:28px;transition:height 0.5s;cursor:pointer;position:relative}
+.chart-bar:hover::after{content:attr(data-val);position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:2px 6px;border-radius:3px;font-size:10px;white-space:nowrap}
+.mini-stat{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--gray-200);font-size:0.85rem}
+.mini-stat:last-child{border-bottom:none}
+.mini-stat .ms-label{color:var(--slate)}
+.mini-stat .ms-val{font-weight:600;color:var(--text-dark)}
+.seo-input-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.seo-preview{background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:1rem;font-size:0.8rem}
+.seo-preview .seo-url{color:#1a0dab;font-size:0.85rem;margin-bottom:0.25rem}
+.seo-preview .seo-title{color:#1a0dab;font-size:1rem;font-weight:500;margin-bottom:0.25rem;text-decoration:underline;cursor:pointer}
+.seo-preview .seo-desc{color:var(--slate);line-height:1.5}
+.admin-login{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%)}
+.login-card{background:var(--white);border-radius:16px;padding:2.5rem;width:400px;max-width:90vw;text-align:center}
+.login-card h2{font-family:'Playfair Display',serif;font-size:1.75rem;margin-bottom:0.5rem}
+.login-card p{color:var(--slate);font-size:0.875rem;margin-bottom:2rem;font-weight:300}
+.login-badge{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--gold-dark);padding:0.35rem 0.75rem;border-radius:100px;font-size:0.75rem;font-weight:600;display:inline-block;margin-bottom:1.5rem}
+.login-error{color:var(--danger);font-size:0.8rem;margin-top:0.5rem}
+
+/* LEAD CAPTURE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-card{background:var(--white);border-radius:16px;padding:2.5rem;max-width:480px;width:100%;position:relative;transform:translateY(20px);transition:transform 0.3s}
+.modal-overlay.open .modal-card{transform:translateY(0)}
+.modal-close{position:absolute;top:1rem;right:1rem;width:30px;height:30px;background:var(--gray-100);border:none;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:var(--slate);transition:all 0.2s;line-height:1}
+.modal-close:hover{background:var(--navy);color:var(--white)}
+.modal-card h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.5rem;color:var(--text-dark)}
+.modal-card p{font-size:0.875rem;color:var(--slate);margin-bottom:1.5rem;font-weight:300;line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--navy);color:var(--white);padding:4rem 2rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:0.75rem}
+.footer-brand p{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.8;font-weight:300}
+.footer-col h4{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:1rem;font-weight:600}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.footer-links a{color:rgba(255,255,255,0.55);font-size:0.85rem;text-decoration:none;cursor:pointer;transition:color 0.2s;font-weight:300}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:rgba(255,255,255,0.35)}
+.newsletter-row{display:flex;gap:0.5rem;margin-top:1rem}
+.newsletter-row input{flex:1;padding:0.6rem 0.875rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:var(--white);font-size:0.8rem;font-family:inherit;outline:none}
+.newsletter-row input::placeholder{color:rgba(255,255,255,0.35)}
+.newsletter-row input:focus{border-color:var(--gold)}
+.newsletter-row button{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:0.6rem 1rem;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s}
+.newsletter-row button:hover{background:var(--gold-light)}
+
+/* VALUATION SECTION */
+.valuation-section{background:linear-gradient(135deg,#f8f6f1 0%,#ede9df 100%);padding:5rem 2rem}
+.valuation-inner{max-width:700px;margin:0 auto;text-align:center}
+.valuation-form{background:var(--white);border-radius:16px;padding:2rem;margin-top:2rem;border:1px solid var(--gray-200);text-align:left}
+.val-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.6s ease both}
+.delay-1{animation-delay:0.15s}
+.delay-2{animation-delay:0.3s}
+.delay-3{animation-delay:0.45s}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .search-inputs{grid-template-columns:1fr 1fr}
+  .listings-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .seo-input-row{grid-template-columns:1fr}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .hero-stats{gap:1.5rem}
+  .hero-stats .num{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">SDK <span>Digital Properties</span></div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a onclick="showPage('listings')" id="nav-listings">Listings</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+      <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+      <li><a onclick="showPage('admin')" id="nav-admin">Admin</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openModal('consult')">Book Consultation</button>
+  </div>
+</nav>
+
+<!-- ======= HOME PAGE ======= -->
+<div id="page-home" class="page active">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-content">
+      <div class="hero-badge fade-up">🏆 Chennai's #1 Luxury Real Estate Agency</div>
+      <h1 class="fade-up delay-1">Find Your <em>Dream Home</em><br>With Expert Guidance</h1>
+      <p class="fade-up delay-2">We connect discerning buyers and sellers with exceptional properties across Chennai's most prestigious neighborhoods. Over 15 years of unmatched real estate expertise.</p>
+      <div class="hero-actions fade-up delay-3">
+        <button class="btn-primary" onclick="showPage('listings')">View Listings</button>
+        <button class="btn-ghost" onclick="openModal('valuation')">Free Home Valuation</button>
+      </div>
+      <!-- SEARCH BAR -->
+      <div class="search-bar-wrap fade-up delay-3" style="animation-delay:0.6s">
+        <div class="search-tabs">
+          <button class="stab active" onclick="setTab(this,'Buy')">Buy</button>
+          <button class="stab" onclick="setTab(this,'Rent')">Rent</button>
+          <button class="stab" onclick="setTab(this,'Commercial')">Commercial</button>
+        </div>
+        <div class="search-inputs">
+          <div class="sinput">
+            <label>Location</label>
+            <input placeholder="City, neighborhood, zip...">
+          </div>
+          <div class="sinput">
+            <label>Property Type</label>
+            <select><option>All Types</option><option>House</option><option>Condo</option><option>Townhouse</option><option>Villa</option><option>Penthouse</option></select>
+          </div>
+          <div class="sinput">
+            <label>Price Range</label>
+            <select><option>Any Price</option><option>Under ₹50 L</option><option>₹50L–₹1 Cr</option><option>₹1Cr–₹3 Cr</option><option>₹3 Cr+</option></select>
+          </div>
+          <button class="search-btn" onclick="showPage('listings')">🔍 Search</button>
+        </div>
+      </div>
+      <div class="hero-stats fade-up" style="animation-delay:0.75s">
+        <div class="stat-item"><div class="num">1,200+</div><div class="lbl">Properties Sold</div></div>
+        <div class="stat-item"><div class="num">₹2,400Cr</div><div class="lbl">Total Sales Volume</div></div>
+        <div class="stat-item"><div class="num">15+</div><div class="lbl">Years Experience</div></div>
+        <div class="stat-item"><div class="num">98%</div><div class="lbl">Client Satisfaction</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED LISTINGS -->
+  <section class="section" style="background:var(--white)">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Premium Properties</div>
+        <h2 class="section-title">Featured Listings</h2>
+        <p class="section-sub">Handpicked properties in Chennai's most sought-after neighborhoods, curated for the discerning buyer.</p>
+      </div>
+      <div class="listings-grid" id="featured-grid"></div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <button class="btn-primary" onclick="showPage('listings')">View All Listings →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section" style="background:var(--light)">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Our Advantage</div>
+        <h2 class="section-title">Why Choose SDK Digital Properties</h2>
+        <p class="section-sub">We deliver a premium real estate experience that combines market expertise with personalized service.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-icon">🏆</div><h3>Market Expertise</h3><p>15+ years of deep knowledge in Chennai's luxury market. We know every neighborhood, every trend, every opportunity.</p></div>
+        <div class="why-card"><div class="why-icon">💎</div><h3>Exclusive Listings</h3><p>Access to off-market and pre-market properties not available to the general public — an unfair advantage for our clients.</p></div>
+        <div class="why-card"><div class="why-icon">🤝</div><h3>White-Glove Service</h3><p>From your first consultation to closing day, you'll have a dedicated agent and concierge team by your side.</p></div>
+        <div class="why-card"><div class="why-icon">📊</div><h3>Data-Driven Strategy</h3><p>We use real-time market analytics to price, market, and negotiate with precision — maximizing your outcome.</p></div>
+        <div class="why-card"><div class="why-icon">⚡</div><h3>Faster Closings</h3><p>Our streamlined process and trusted network of lenders, attorneys, and inspectors means deals close 40% faster.</p></div>
+        <div class="why-card"><div class="why-icon">🌍</div><h3>Global Network</h3><p>Connected to 400+ luxury agencies worldwide — ideal for international buyers and clients relocating to Chennai.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" style="background:var(--white)">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Client Stories</div>
+        <h2 class="section-title">What Our Clients Say</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">SDK Digital Properties found us our dream home in Anna Nagar within two weeks. Their market knowledge and negotiation skills saved us ₹8.5 Lakh off asking price. Truly exceptional service.</p>
+          <div class="testi-author"><div class="testi-avatar">JM</div><div><div class="testi-name">James & Maria Chen</div><div class="testi-role">Purchased in Lincoln Park</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">I've worked with many realtors over the years but none match the professionalism and results of SDK Digital Properties. They sold my Gold Coast condo in 6 days above asking price.</p>
+          <div class="testi-author"><div class="testi-avatar">SR</div><div><div class="testi-name">Sarah Roberts</div><div class="testi-role">Sold in Gold Coast</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">As a first-time buyer, I was nervous about the process. My SDK Digital Properties agent guided me every step of the way with patience and expertise. Couldn't be happier!</p>
+          <div class="testi-author"><div class="testi-avatar">DK</div><div><div class="testi-name">David Kim</div><div class="testi-role">Purchased in Wicker Park</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE VALUATION -->
+  <section class="valuation-section">
+    <div class="valuation-inner">
+      <div class="section-tag" style="text-align:center">Free Service</div>
+      <h2 class="section-title" style="text-align:center">What Is Your Home Worth?</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto 0">Get a comprehensive free home valuation report from our expert appraisers — no obligation, no pressure.</p>
+      <div class="valuation-form">
+        <div class="val-grid">
+          <div class="form-group"><label>Street Address</label><input placeholder="123 Main St..."></div>
+          <div class="form-group"><label>City / Zip Code</label><input placeholder="Chennai, TN 60601"></div>
+          <div class="form-group"><label>Property Type</label><select><option>Single Family Home</option><option>Condo</option><option>Townhouse</option><option>Multi-Family</option></select></div>
+          <div class="form-group"><label>Approx. Square Footage</label><input placeholder="e.g. 2,400 sq ft"></div>
+        </div>
+        <div class="form-group"><label>Full Name</label><input placeholder="Your full name"></div>
+        <div class="val-grid">
+          <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Phone</label><input placeholder="+91 98400 00100"></div>
+        </div>
+        <button class="btn-submit" onclick="showSuccess(this,'Valuation Request Submitted! We will contact you within 24 hours.')">Get My Free Valuation →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to Find Your Perfect Home?</h2>
+    <p>Join over 1,200 families who found their dream home with SDK Digital Properties. Let's start your journey today.</p>
+    <div class="cta-buttons">
+      <button class="btn-primary" onclick="showPage('listings')">Browse All Listings</button>
+      <button class="btn-ghost" onclick="openModal('consult')">Book Free Consultation</button>
+      <button class="btn-ghost" onclick="openModal('guide')">📄 Download Buyer's Guide</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">SDK Digital Properties</div>
+          <p>Chennai's premier luxury real estate agency, connecting exceptional clients with extraordinary properties since 2009.</p>
+          <div class="newsletter-row" style="margin-top:1rem">
+            <input placeholder="Your email address">
+            <button onclick="showSuccess(this,'Subscribed!')">Subscribe</button>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('listings')">All Listings</a></li>
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('blog')">Blog & News</a></li>
+            <li><a onclick="showPage('contact')">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a>Buy a Home</a></li>
+            <li><a>Sell Your Home</a></li>
+            <li><a>Rent a Property</a></li>
+            <li><a>Home Valuation</a></li>
+            <li><a>Investment Consulting</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul class="footer-links">
+            <li><a>📍 2/41 Dharmaraja Kovil Street, Kovur, Chennai- 600128</a></li>
+            <li><a>📞 +91 78457-97828</a></li>
+            <li><a>✉️ SDKDigitalProperties@gmail.com</a></li>
+            <li><a>🕐 Mon–Sat 9AM–7PM</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 SDK Digital Properties. All rights reserved.</span>
+        <span>Privacy Policy · Terms of Service · Sitemap</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ======= LISTINGS PAGE ======= -->
+<div id="page-listings" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb">Home › <span>Property Listings</span></div>
+    <h1>Find Your Perfect Property</h1>
+    <p>Browse our curated collection of premium Chennai real estate</p>
+  </div>
+  <div class="filters-bar">
+    <div class="filters-inner">
+      <select class="filter-select" onchange="filterListings()">
+        <option>All Types</option><option>House</option><option>Condo</option><option>Townhouse</option><option>Villa</option>
+      </select>
+      <select class="filter-select" onchange="filterListings()">
+        <option>Any Price</option><option>Under ₹50 L</option><option>₹50L–₹1 Cr</option><option>₹1Cr–₹3 Cr</option><option>₹3 Cr+</option>
+      </select>
+      <select class="filter-select" onchange="filterListings()">
+        <option>Any Beds</option><option>1+ Beds</option><option>2+ Beds</option><option>3+ Beds</option><option>4+ Beds</option>
+      </select>
+      <select class="filter-select" onchange="filterListings()">
+        <option>Any Baths</option><option>1+ Baths</option><option>2+ Baths</option><option>3+ Baths</option>
+      </select>
+      <select class="filter-select" onchange="filterListings()">
+        <option>Any City</option><option>Anna Nagar</option><option>Nungambakkam</option><option>Adyar</option><option>T. Nagar</option>
+      </select>
+      <div class="filter-sort">
+        Sort:
+        <button class="sort-btn active" onclick="sortBy(this,'newest')">Newest</button>
+        <button class="sort-btn" onclick="sortBy(this,'price-low')">Price ↑</button>
+        <button class="sort-btn" onclick="sortBy(this,'price-high')">Price ↓</button>
+        <button class="sort-btn" onclick="sortBy(this,'featured')">Featured</button>
+      </div>
+    </div>
+  </div>
+  <section class="section" style="background:var(--light)">
+    <div class="section-inner">
+      <p class="results-count" id="results-count" style="margin-bottom:1.5rem">Showing <strong>12</strong> properties</p>
+      <div class="listings-grid" id="all-listings-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= DETAIL PAGE ======= -->
+<div id="page-detail" class="page">
+  <section class="section">
+    <div class="section-inner">
+      <div class="breadcrumb" style="margin-bottom:1.5rem;color:var(--slate)">
+        <a onclick="showPage('listings')" style="color:var(--gold);cursor:pointer;text-decoration:none">← Back to Listings</a>
+      </div>
+      <div class="detail-gallery">
+        <div class="gallery-main" id="detail-main-img">🏛️</div>
+        <div class="gallery-thumbs">
+          <div class="gallery-thumb">🛋️</div>
+          <div class="gallery-thumb">🛁</div>
+          <div class="gallery-thumb">🌳</div>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-main">
+          <div class="price" id="detail-price">₹1.85 Cr</div>
+          <h1 id="detail-name">Stunning Anna Nagar Villa</h1>
+          <div class="location" id="detail-loc">📍 42, 6th Avenue, Anna Nagar, Chennai, TN 60614</div>
+          <div class="feat-pills">
+            <span class="feat-pill" id="detail-beds">4 Bedrooms</span>
+            <span class="feat-pill" id="detail-baths">3.5 Bathrooms</span>
+            <span class="feat-pill" id="detail-sqft">3,200 sq ft</span>
+            <span class="feat-pill">Built 2019</span>
+            <span class="feat-pill">Garage 2-Car</span>
+          </div>
+          <div class="section-tag">About This Property</div>
+          <p style="color:var(--slate);line-height:1.9;font-size:0.95rem;font-weight:300;margin:0.75rem 0 2rem" id="detail-desc">This magnificent brownstone residence blends classic Chennai architecture with modern luxury finishes. The open-concept main floor features soaring 10-ft ceilings, a gourmet chef's kitchen with marble countertops, and floor-to-ceiling windows flooding the space with natural light. The owner's suite is a true retreat with a spa-like ensuite and private terrace overlooking the manicured garden.</p>
+          <div class="section-tag">Features & Amenities</div>
+          <div class="amenities-grid" style="margin-top:0.75rem">
+            <div class="amenity">Central Air & Heating</div>
+            <div class="amenity">Chef's Kitchen</div>
+            <div class="amenity">Private Rooftop Deck</div>
+            <div class="amenity">Smart Home System</div>
+            <div class="amenity">Heated Floors</div>
+            <div class="amenity">Wine Cellar</div>
+            <div class="amenity">Home Theater</div>
+            <div class="amenity">Custom Closets</div>
+            <div class="amenity">2-Car Garage</div>
+            <div class="amenity">Pet Friendly</div>
+            <div class="amenity">Green Space</div>
+            <div class="amenity">Security System</div>
+          </div>
+          <!-- MORTGAGE CALC -->
+          <div class="mortgage-card">
+            <h3>Mortgage Calculator</h3>
+            <div class="val-grid">
+              <div class="form-group"><label>Home Price (₹)</label><input type="number" id="m-price" value="18500000" oninput="calcMortgage()"></div>
+              <div class="form-group"><label>Down Payment (%)</label><input type="number" id="m-down" value="20" oninput="calcMortgage()"></div>
+              <div class="form-group"><label>Interest Rate (%)</label><input type="number" id="m-rate" value="6.5" step="0.1" oninput="calcMortgage()"></div>
+              <div class="form-group"><label>Loan Term (years)</label><select id="m-term" onchange="calcMortgage()"><option value="30">30 Years</option><option value="20">20 Years</option><option value="15">15 Years</option></select></div>
+            </div>
+            <div class="mortgage-result">
+              <div class="label">Estimated Monthly Payment</div>
+              <div class="amount" id="m-result">₹1,04,820/mo</div>
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:0.25rem">Principal + Interest only. Taxes & insurance not included.</div>
+            </div>
+          </div>
+          <!-- MAP -->
+          <div class="map-placeholder" style="margin-top:2rem">
+            <span style="font-size:2rem">📍</span>
+            <span>Interactive map — 42, 6th Avenue, Anna Nagar, Chennai, TN 60614</span>
+            <span style="font-size:0.75rem;color:var(--gray-400)">(Google Maps integration via API key)</span>
+          </div>
+        </div>
+        <!-- INQUIRY FORM -->
+        <div>
+          <div class="inquiry-card">
+            <h3>Schedule a Tour</h3>
+            <div class="form-group"><label>Full Name</label><input placeholder="Your name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Phone</label><input placeholder="+91 98400 00100"></div>
+            <div class="form-group"><label>Preferred Date</label><input type="date"></div>
+            <div class="form-group"><label>Message</label><textarea placeholder="I'm interested in viewing this property..."></textarea></div>
+            <button class="btn-submit" onclick="showSuccess(this,'Tour Scheduled! Our agent will confirm within 2 hours.')">Request Tour</button>
+            <button class="btn-submit" style="background:var(--navy);color:var(--white);margin-top:0.5rem" onclick="showSuccess(this,'Inquiry Sent! We will be in touch shortly.')">Send Inquiry</button>
+          </div>
+          <!-- AGENT CARD -->
+          <div class="admin-card" style="margin-top:1rem;background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:1.25rem">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+              <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;flex-shrink:0">SC</div>
+              <div>
+                <div style="font-weight:600;font-size:0.95rem">Sarah Collins</div>
+                <div style="font-size:0.775rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em">Senior Listing Agent</div>
+                <div class="stars" style="font-size:0.75rem">★★★★★ <span style="color:var(--slate);font-size:0.7rem">48 reviews</span></div>
+              </div>
+            </div>
+            <div style="font-size:0.8rem;color:var(--slate);display:flex;flex-direction:column;gap:0.5rem">
+              <span>📞 +91 44 4567 8001</span>
+              <span>✉️ sarah@SDKDigitalProperties.com</span>
+            </div>
+            <button class="whatsapp-btn" style="margin-top:1rem;font-size:0.8rem;padding:0.6rem 1rem">💬 Chat on WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= ABOUT PAGE ======= -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb">Home › <span>About Us</span></div>
+    <h1>Our Story</h1>
+    <p>15 years of passion, precision, and premium real estate</p>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:5rem">
+        <div>
+          <div class="section-tag">Who We Are</div>
+          <h2 class="section-title">Chennai's Most Trusted Luxury Realtors</h2>
+          <p class="section-sub" style="max-width:100%;margin-bottom:1.5rem">Founded in 2009, SDK Digital Properties was born from a simple belief: every client deserves white-glove service and results that exceed expectations. We've since grown into Chennai's leading luxury real estate firm, with a team of 24 expert agents and ₹2,400 Crore in total sales.</p>
+          <p style="color:var(--slate);font-size:0.9rem;line-height:1.9;font-weight:300;margin-bottom:2rem">Our approach blends deep local market intelligence with a global network, giving our clients access to exclusive on- and off-market opportunities. Whether you're buying your first home or selling a ₹15 Cr property, we deliver the same level of dedication and expertise.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div style="padding:1rem;background:var(--light);border-radius:8px;text-align:center;border:1px solid var(--gray-200)"><div style="font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--gold)">24</div><div style="font-size:0.75rem;color:var(--slate);text-transform:uppercase;letter-spacing:0.08em">Expert Agents</div></div>
+            <div style="padding:1rem;background:var(--light);border-radius:8px;text-align:center;border:1px solid var(--gray-200)"><div style="font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--gold)">15+</div><div style="font-size:0.75rem;color:var(--slate);text-transform:uppercase;letter-spacing:0.08em">Years in Market</div></div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:16px;height:400px;display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:0.6">🏙️</div>
+      </div>
+      <div class="section-header center">
+        <div class="section-tag">The Team</div>
+        <h2 class="section-title">Meet Our Agents</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar">👔</div><div class="team-name">Michael A. Wells</div><div class="team-role">Founding Principal</div><p class="team-bio">15+ years specialising in Nungambakkam and Anna Nagar luxury properties. Former Goldman Sachs analyst turned Chennai's top luxury realtor.</p><div class="team-socials"><div class="social-btn">in</div><div class="social-btn">tw</div></div></div>
+        <div class="team-card"><div class="team-avatar">👩‍💼</div><div class="team-name">Sarah Collins</div><div class="team-role">Senior Listing Agent</div><p class="team-bio">Expert in T. Nagar apartments and Adyar properties. Sarah has closed over 300 transactions and consistently exceeds listing targets.</p><div class="team-socials"><div class="social-btn">in</div><div class="social-btn">tw</div></div></div>
+        <div class="team-card"><div class="team-avatar">🤵</div><div class="team-name">James Park</div><div class="team-role">Buyer's Specialist</div><p class="team-bio">Dedicated to guiding buyers from first home to forever home. James's client satisfaction rating is consistently 5 stars across 250+ transactions.</p><div class="team-socials"><div class="social-btn">in</div><div class="social-btn">tw</div></div></div>
+        <div class="team-card"><div class="team-avatar">👩</div><div class="team-name">Elena Rodriguez</div><div class="team-role">Investment Advisor</div><p class="team-bio">Specialises in multi-family and commercial investment properties. MBA from IIM Bangalore with deep expertise in ROI analysis and portfolio growth.</p><div class="team-socials"><div class="social-btn">in</div><div class="social-btn">tw</div></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= BLOG PAGE ======= -->
+<div id="page-blog" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb">Home › <span>Blog & Resources</span></div>
+    <h1>Real Estate Insights</h1>
+    <p>Market trends, buyer guides, and expert advice from Chennai's top realtors</p>
+  </div>
+  <section class="section" style="background:var(--light)">
+    <div class="section-inner">
+      <div class="blog-grid">
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Market Trends</div>🏙️</div><div class="blog-body"><div class="blog-date">Dec 15, 2024</div><div class="blog-title">Chennai Luxury Market Sees Record Q4 Sales</div><p class="blog-excerpt">Despite rising interest rates, Chennai's luxury segment above ₹1 Cr posted a 23% YoY gain in Q4 2024, driven by demand from tech sector buyers...</p><a class="blog-read">Read More →</a></div></div>
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Buyer's Guide</div>🔑</div><div class="blog-body"><div class="blog-date">Nov 28, 2024</div><div class="blog-title">The Ultimate First-Time Buyer's Guide for Chennai 2025</div><p class="blog-excerpt">Everything you need to know about buying your first home in Chennai — from pre-approval to closing day, step by step...</p><a class="blog-read">Read More →</a></div></div>
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Seller Tips</div>💰</div><div class="blog-body"><div class="blog-date">Nov 10, 2024</div><div class="blog-title">How to Stage Your Home for Maximum Sale Price</div><p class="blog-excerpt">Professionally staged homes sell 73% faster and for 6-10% more than unstaged properties. Here's exactly what to do...</p><a class="blog-read">Read More →</a></div></div>
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Investment</div>📈</div><div class="blog-body"><div class="blog-date">Oct 22, 2024</div><div class="blog-title">Top 5 Chennai Neighborhoods for Real Estate Investment in 2025</div><p class="blog-excerpt">Velachery, Sholinganallur, and OMR continue to outperform the broader market. Here's our detailed investment analysis...</p><a class="blog-read">Read More →</a></div></div>
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Financing</div>🏦</div><div class="blog-body"><div class="blog-date">Oct 5, 2024</div><div class="blog-title">Understanding Jumbo Loans: A Guide for Luxury Buyers</div><p class="blog-excerpt">Properties above ₹75 Lakh often require premium home loan products. We break down what lenders look for and how to get the best rate...</p><a class="blog-read">Read More →</a></div></div>
+        <div class="blog-card"><div class="blog-img"><div class="blog-cat">Lifestyle</div>🌆</div><div class="blog-body"><div class="blog-date">Sep 18, 2024</div><div class="blog-title">Anna Nagar vs. Nungambakkam: Which Neighbourhood is Right for You?</div><p class="blog-excerpt">Two of Chennai's most prestigious neighborhoods offer very different lifestyles. We compare schools, walkability, and more...</p><a class="blog-read">Read More →</a></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= CONTACT PAGE ======= -->
+<div id="page-contact" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb">Home › <span>Contact Us</span></div>
+    <h1>Get In Touch</h1>
+    <p>We'd love to hear from you — our team responds within 2 hours</p>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="section-tag">Let's Connect</div>
+          <h2 class="section-title" style="margin-bottom:2rem">We're Here To Help</h2>
+          <div class="contact-items">
+            <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Office Address</div><div class="contact-val">No. 2/41, Dharmaraja Kovil Street, Kovur<br>Chennai, TN 600128</div></div></div>
+            <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">Phone</div><div class="contact-val">+91 97907-67096</div></div></div>
+            <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-label">Email</div><div class="contact-val">SDKDigitalProperties@gmail.com</div></div></div>
+            <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-label">Office Hours</div><div class="contact-val">Mon–Fri: 9AM–7PM<br>Sat: 10AM–5PM · Sun: By Appointment</div></div></div>
+          </div>
+          <button class="whatsapp-btn">💬 Chat on WhatsApp</button>
+          <div class="map-placeholder">
+            <span style="font-size:2.5rem">📍</span>
+            <strong>SDK Digital Properties Chennai HQ</strong>
+            <span>10, Dr. Radhakrishnan Salai · Google Maps</span>
+          </div>
+        </div>
+        <div>
+          <div class="inquiry-card" style="position:relative">
+            <h3>Send Us a Message</h3>
+            <div class="form-group"><label>Full Name</label><input placeholder="Your full name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Phone</label><input placeholder="+91 98400 00100"></div>
+            <div class="form-group"><label>Subject</label>
+              <select><option>General Inquiry</option><option>Buy a Property</option><option>Sell My Home</option><option>Home Valuation</option><option>Investment Advice</option></select>
+            </div>
+            <div class="form-group"><label>Message</label><textarea style="min-height:120px" placeholder="How can we help you?"></textarea></div>
+            <button class="btn-submit" onclick="showSuccess(this,'Message Sent! We will respond within 2 hours.')">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======= ADMIN PAGE ======= -->
+<div id="page-admin" class="page">
+  <!-- LOGIN STATE -->
+  <div id="admin-login-screen" class="admin-login">
+    <div class="login-card">
+      <div class="login-badge">🔐 Admin Access</div>
+      <h2>SDK Digital Properties Admin</h2>
+      <p>Sign in to your dashboard to manage listings, leads, and content.</p>
+      <div class="form-group" style="text-align:left"><label>Email Address</label><input type="email" id="login-email" placeholder="admin@SDKDigitalProperties.com" value="admin@SDKDigitalProperties.com"></div>
+      <div class="form-group" style="text-align:left"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••" value="admin123"></div>
+      <button class="btn-submit" onclick="adminLogin()">Sign In to Dashboard</button>
+      <p class="login-error" id="login-error"></p>
+      <p style="font-size:0.75rem;color:var(--slate);margin-top:1rem">Demo: admin@SDKDigitalProperties.com / admin123</p>
+    </div>
+  </div>
+  <!-- DASHBOARD -->
+  <div id="admin-dashboard" style="display:none">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="admin-logo">
+          <span>SDK Digital Properties</span>
+          <p>Admin Dashboard</p>
+        </div>
+        <div class="sidebar-label">Overview</div>
+        <div class="sidebar-item active" onclick="switchPanel('overview',this)"><span class="sidebar-icon">📊</span>Analytics Overview</div>
+        <div class="sidebar-label">Content</div>
+        <div class="sidebar-item" onclick="switchPanel('listings-admin',this)"><span class="sidebar-icon">🏠</span>Manage Listings</div>
+        <div class="sidebar-item" onclick="switchPanel('leads',this)"><span class="sidebar-icon">👥</span>Leads & Inquiries</div>
+        <div class="sidebar-item" onclick="switchPanel('blog-admin',this)"><span class="sidebar-icon">✍️</span>Blog Posts</div>
+        <div class="sidebar-label">Settings</div>
+        <div class="sidebar-item" onclick="switchPanel('seo',this)"><span class="sidebar-icon">🔍</span>SEO Settings</div>
+        <div class="sidebar-item" onclick="switchPanel('users',this)"><span class="sidebar-icon">👤</span>Users & Agents</div>
+        <div class="sidebar-label">Account</div>
+        <div class="sidebar-item" onclick="adminLogout()"><span class="sidebar-icon">🚪</span>Sign Out</div>
+      </aside>
+      <main class="admin-main">
+        <!-- OVERVIEW -->
+        <div class="admin-panel active" id="panel-overview">
+          <div class="admin-header"><h1>Analytics Overview</h1><p>Welcome back, Admin. Here's your real estate performance summary.</p></div>
+          <div class="stats-row">
+            <div class="stat-card"><div class="s-icon">🏠</div><div class="s-label">Active Listings</div><div class="s-val">47</div><div class="s-change">↑ 12% this month</div></div>
+            <div class="stat-card"><div class="s-icon">👥</div><div class="s-label">New Leads (30d)</div><div class="s-val">183</div><div class="s-change">↑ 28% vs last month</div></div>
+            <div class="stat-card"><div class="s-icon">💰</div><div class="s-label">Sales Volume (MTD)</div><div class="s-val">₹21 Cr</div><div class="s-change">↑ 8% vs last month</div></div>
+            <div class="stat-card"><div class="s-icon">📈</div><div class="s-label">Site Visitors (30d)</div><div class="s-val">24,817</div><div class="s-change down">↓ 3% vs last month</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem">
+            <div class="admin-card">
+              <h2>Monthly Sales Volume ($K)</h2>
+              <div class="analytics-chart">
+                <div class="chart-bars" id="chart-bars"></div>
+              </div>
+              <div style="display:flex;justify-content:space-around;font-size:0.7rem;color:var(--slate)">
+                <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+              </div>
+            </div>
+            <div class="admin-card">
+              <h2>Quick Stats</h2>
+              <div class="mini-stat"><span class="ms-label">Avg Days on Market</span><span class="ms-val">18 days</span></div>
+              <div class="mini-stat"><span class="ms-label">Avg Sale Price</span><span class="ms-val">₹1.24 Cr</span></div>
+              <div class="mini-stat"><span class="ms-label">List-to-Sale Ratio</span><span class="ms-val">97.4%</span></div>
+              <div class="mini-stat"><span class="ms-label">Active Agents</span><span class="ms-val">24</span></div>
+              <div class="mini-stat"><span class="ms-label">Pending Transactions</span><span class="ms-val">11</span></div>
+              <div class="mini-stat"><span class="ms-label">Closed This Month</span><span class="ms-val">17</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTINGS ADMIN -->
+        <div class="admin-panel" id="panel-listings-admin">
+          <div class="admin-header"><h1>Manage Listings</h1><p>Add, edit, and manage property listings.</p></div>
+          <button class="add-btn" onclick="openModal('add-listing')">➕ Add New Listing</button>
+          <div class="admin-card">
+            <h2>All Active Listings</h2>
+            <table class="admin-table">
+              <thead><tr><th>Property</th><th>Type</th><th>Price</th><th>Status</th><th>Beds</th><th>Agent</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>42, 6th Avenue, Anna Nagar</td><td>Independent Villa</td><td>₹1.85 Cr</td><td><span class="status-badge active">Active</span></td><td>4</td><td>Sarah Collins</td><td><div class="action-btns"><button class="act-btn view" onclick="showPage('detail')">View</button><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>15, Khader Nawaz Khan Road, Nungambakkam</td><td>Condo</td><td>₹1.25 Cr</td><td><span class="status-badge active">Active</span></td><td>3</td><td>James Park</td><td><div class="action-btns"><button class="act-btn view">View</button><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>18, LB Road, Adyar</td><td>Townhouse</td><td>₹1.02 Cr</td><td><span class="status-badge pending">Pending</span></td><td>3</td><td>Elena Rodriguez</td><td><div class="action-btns"><button class="act-btn view">View</button><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>7, Velachery Main Road</td><td>Single Family</td><td>₹3.10 Cr</td><td><span class="status-badge active">Active</span></td><td>5</td><td>Michael Wells</td><td><div class="action-btns"><button class="act-btn view">View</button><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>Tower B, 32nd Floor, Nungambakkam</td><td>Penthouse</td><td>₹5.15 Cr</td><td><span class="status-badge sold">Sold</span></td><td>4</td><td>Sarah Collins</td><td><div class="action-btns"><button class="act-btn view">View</button><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- LEADS -->
+        <div class="admin-panel" id="panel-leads">
+          <div class="admin-header"><h1>Leads & Inquiries</h1><p>Manage and track all incoming buyer and seller leads.</p></div>
+          <div class="admin-card">
+            <h2>Recent Leads (Last 30 Days)</h2>
+            <table class="admin-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Property Interest</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Robert T.</td><td>robert@email.com</td><td>🏠 Buyer</td><td>Anna Nagar ₹2Cr+</td><td>Dec 18</td><td><span class="status-badge active">New</span></td></tr>
+                <tr><td>Linda M.</td><td>linda@email.com</td><td>📋 Valuation</td><td>Nungambakkam Flat</td><td>Dec 17</td><td><span class="status-badge pending">Contacted</span></td></tr>
+                <tr><td>Chen Family</td><td>chen@email.com</td><td>🏠 Buyer</td><td>Adyar ₹1.5Cr</td><td>Dec 16</td><td><span class="status-badge active">New</span></td></tr>
+                <tr><td>David S.</td><td>david@email.com</td><td>📅 Tour</td><td>2847 N. Lincoln</td><td>Dec 15</td><td><span class="status-badge sold">Closed</span></td></tr>
+                <tr><td>Amy W.</td><td>amy@email.com</td><td>📰 Newsletter</td><td>—</td><td>Dec 14</td><td><span class="status-badge pending">Subscribed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BLOG ADMIN -->
+        <div class="admin-panel" id="panel-blog-admin">
+          <div class="admin-header"><h1>Blog Posts</h1><p>Create and manage your real estate content.</p></div>
+          <button class="add-btn">✍️ New Blog Post</button>
+          <div class="admin-card">
+            <table class="admin-table">
+              <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th><th>Views</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Chennai Luxury Market Q4 2024</td><td>Market Trends</td><td>Dec 15</td><td><span class="status-badge active">Published</span></td><td>2,841</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>Ultimate First-Time Buyer Guide 2025</td><td>Buyer's Guide</td><td>Nov 28</td><td><span class="status-badge active">Published</span></td><td>5,102</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+                <tr><td>Top Investment Neighborhoods 2025</td><td>Investment</td><td>Dec 20</td><td><span class="status-badge pending">Draft</span></td><td>—</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Delete</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SEO -->
+        <div class="admin-panel" id="panel-seo">
+          <div class="admin-header"><h1>SEO Settings</h1><p>Optimize your website for search engines.</p></div>
+          <div class="admin-card">
+            <h2>Homepage SEO</h2>
+            <div class="seo-input-row">
+              <div class="form-group"><label>Meta Title</label><input value="SDK Digital Properties Chennai — Luxury Real Estate | Buy & Sell Premium Properties"></div>
+              <div class="form-group"><label>Target Keywords</label><input value="luxury real estate chennai, chennai realtor, buy home chennai"></div>
+            </div>
+            <div class="form-group"><label>Meta Description</label><textarea style="min-height:70px">SDK Digital Properties is Chennai's premier luxury real estate agency. Browse 1,200+ listings in Anna Nagar, Nungambakkam & T. Nagar. Free home valuation & expert agents.</textarea></div>
+            <div class="seo-preview" style="margin:1rem 0">
+              <div class="seo-url">SDKDigitalProperties.com</div>
+              <div class="seo-title">SDK Digital Properties Chennai — Luxury Real Estate | Buy & Sell Premium Properties</div>
+              <div class="seo-desc">SDK Digital Properties is Chennai's premier luxury real estate agency. Browse 1,200+ listings in Anna Nagar, Nungambakkam & T. Nagar. Free home valuation & expert agents.</div>
+            </div>
+            <div class="seo-input-row">
+              <div class="form-group"><label>OG Image URL</label><input placeholder="https://SDKDigitalProperties.com/og-image.jpg"></div>
+              <div class="form-group"><label>Canonical URL</label><input value="https://SDKDigitalProperties.com"></div>
+            </div>
+            <button class="btn-submit" style="max-width:200px" onclick="showSuccess(this,'SEO Settings Saved!')">Save SEO Settings</button>
+          </div>
+          <div class="admin-card">
+            <h2>Schema Markup</h2>
+            <div class="form-group"><label>Organization Schema</label><textarea style="min-height:80px;font-family:monospace;font-size:0.75rem">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"SDK Digital Properties","url":"https://SDKDigitalProperties.com","telephone":"+91 97907-67096","address":{"@type":"PostalAddress","streetAddress":"10, Dr. Radhakrishnan Salai","addressLocality":"Chennai","addressRegion":"TN"}}</textarea></div>
+            <button class="btn-submit" style="max-width:200px" onclick="showSuccess(this,'Schema Updated!')">Update Schema</button>
+          </div>
+        </div>
+
+        <!-- USERS -->
+        <div class="admin-panel" id="panel-users">
+          <div class="admin-header"><h1>Users & Agents</h1><p>Manage team access and roles.</p></div>
+          <button class="add-btn">➕ Invite Agent</button>
+          <div class="admin-card">
+            <table class="admin-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Listings</th><th>Last Login</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Michael Wells</td><td>michael@SDKDigitalProperties.com</td><td>🔑 Admin</td><td>12</td><td>Today</td><td><div class="action-btns"><button class="act-btn edit">Edit</button></div></td></tr>
+                <tr><td>Sarah Collins</td><td>sarah@SDKDigitalProperties.com</td><td>🏠 Senior Agent</td><td>18</td><td>Today</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Remove</button></div></td></tr>
+                <tr><td>James Park</td><td>james@SDKDigitalProperties.com</td><td>🏠 Agent</td><td>9</td><td>Yesterday</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Remove</button></div></td></tr>
+                <tr><td>Elena Rodriguez</td><td>elena@SDKDigitalProperties.com</td><td>🏠 Agent</td><td>8</td><td>Dec 16</td><td><div class="action-btns"><button class="act-btn edit">Edit</button><button class="act-btn del">Remove</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD CAPTURE MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalBg(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+const properties = [
+  {id:1,emoji:'🏛️',name:'Stunning Anna Nagar Villa',loc:'Anna Nagar, Chennai',price:'₹1.85 Cr',priceNum:18500000,beds:4,baths:3.5,sqft:'3,200',type:'Independent Villa',badge:'For Sale',desc:'Magnificent brownstone blending classic Chennai architecture with modern luxury. Chef kitchen, rooftop deck, smart home system.'},
+  {id:2,emoji:'🏢',name:'Nungambakkam Luxury Penthouse',loc:'Nungambakkam, Chennai',price:'₹4.50 Cr',priceNum:45000000,beds:4,baths:4,sqft:'4,100',type:'Penthouse',badge:'For Sale',desc:'Breathtaking lake views from this full-floor penthouse. Private elevator, 12-ft ceilings, designer finishes throughout.'},
+  {id:3,emoji:'🏡',name:'T. Nagar Modern Apartment',loc:'T. Nagar, Chennai',price:'₹95 L',priceNum:9500000,beds:2,baths:2,sqft:'1,450',type:'Condo',badge:'For Sale',desc:'Contemporary condo in the heart of River North. Floor-to-ceiling windows, quartz countertops, building amenities.'},
+  {id:4,emoji:'🏘️',name:'Adyar Heritage Townhouse',loc:'Adyar, Chennai',price:'₹1.25 Cr',priceNum:12500000,beds:3,baths:2.5,sqft:'2,200',type:'Townhouse',badge:'For Rent',desc:'Beautifully restored Victorian with original details. Private garden, finished basement, walk to restaurants & transit.'},
+  {id:5,emoji:'🏰',name:'Velachery Luxury Independent Home',loc:'Velachery, Chennai',price:'₹3.10 Cr',priceNum:31000000,beds:5,baths:4.5,sqft:'4,800',type:'House',badge:'For Sale',desc:'Rare single-family home in Lakeview. Whole-home renovation, heated 2-car garage, Waveland Ave location.'},
+  {id:6,emoji:'🌆',name:'Mylapore Lakefront Apartment',loc:'Mylapore, Chennai',price:'₹78 L',priceNum:7800000,beds:2,baths:2,sqft:'1,280',type:'Condo',badge:'For Sale',desc:'Panoramic lakefront views. Modern kitchen, in-unit laundry, building gym and rooftop pool.'},
+  {id:7,emoji:'🏠',name:'Kilpauk Garden Villa',loc:'Kilpauk, Chennai',price:'₹1.10 Cr',priceNum:11000000,beds:4,baths:3,sqft:'2,650',type:'House',badge:'For Sale',desc:'Charming greystone in booming Logan Square. Original woodwork preserved with modern updates throughout.'},
+  {id:8,emoji:'🏙️',name:'Alwarpet High-Rise Suite',loc:'Alwarpet, Chennai',price:'₹2.65 Cr',priceNum:26500000,beds:3,baths:3,sqft:'2,900',type:'Condo',badge:'For Rent',desc:'Sophisticated high-rise living steps from the Magnificent Mile. Full amenity building, concierge service.'},
+];
+
+function renderProperties(grid, data, limit) {
+  const g = document.getElementById(grid);
+  if (!g) return;
+  const items = limit ? data.slice(0, limit) : data;
+  g.innerHTML = items.map(p => `
+    <div class="prop-card" onclick="showDetail(${p.id})">
+      <div class="prop-img">
+        <div class="prop-img-inner">${p.emoji}</div>
+        <span class="prop-badge ${p.badge==='For Rent'?'rent':''}">${p.badge}</span>
+        <div class="prop-fav">♡</div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">${p.price}</div>
+        <div class="prop-name">${p.name}</div>
+        <div class="prop-loc">📍 ${p.loc}</div>
+        <div class="prop-feats">
+          <span class="prop-feat"><strong>${p.beds}</strong> Beds</span>
+          <span class="prop-feat"><strong>${p.baths}</strong> Baths</span>
+          <span class="prop-feat"><strong>${p.sqft}</strong> sqft</span>
+          <span class="prop-feat"><strong>${p.type}</strong></span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function showDetail(id) {
+  const p = properties.find(x=>x.id===id) || properties[0];
+  document.getElementById('detail-price').textContent = p.price;
+  document.getElementById('detail-name').textContent = p.name;
+  document.getElementById('detail-loc').textContent = '📍 ' + p.loc;
+  document.getElementById('detail-beds').textContent = p.beds + ' Bedrooms';
+  document.getElementById('detail-baths').textContent = p.baths + ' Bathrooms';
+  document.getElementById('detail-sqft').textContent = p.sqft + ' sq ft';
+  document.getElementById('detail-desc').textContent = p.desc + ' This exceptional property represents outstanding value in one of Chennai\'s most desirable neighborhoods.';
+  document.getElementById('detail-main-img').textContent = p.emoji;
+  document.getElementById('m-price').value = p.priceNum || 18500000;
+  calcMortgage();
+  showPage('detail');
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const navEl = document.getElementById('nav-'+name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0,0);
+  if (name==='listings') renderProperties('all-listings-grid', properties);
+}
+
+function setTab(el, type) {
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function filterListings() {
+  const count = Math.floor(Math.random()*4)+4;
+  document.getElementById('results-count').innerHTML = `Showing <strong>${count}</strong> properties`;
+}
+
+function sortBy(el, type) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function calcMortgage() {
+  const price = parseFloat(document.getElementById('m-price').value)||0;
+  const down = parseFloat(document.getElementById('m-down').value)||20;
+  const rate = parseFloat(document.getElementById('m-rate').value)||6.5;
+  const term = parseInt(document.getElementById('m-term').value)||30;
+  const principal = price * (1 - down/100);
+  const r = rate/100/12;
+  const n = term*12;
+  const monthly = r===0 ? principal/n : principal * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+  document.getElementById('m-result').textContent = '₹' + Math.round(monthly).toLocaleString('en-IN') + '/mo';
+}
+
+function adminLogin() {
+  const e = document.getElementById('login-email').value;
+  const p = document.getElementById('login-pass').value;
+  if (e==='admin@SDKDigitalProperties.com' && p==='admin123') {
+    document.getElementById('admin-login-screen').style.display='none';
+    document.getElementById('admin-dashboard').style.display='block';
+    renderChartBars();
+  } else {
+    document.getElementById('login-error').textContent = 'Invalid credentials. Try admin@SDKDigitalProperties.com / admin123';
+  }
+}
+
+function adminLogout() {
+  document.getElementById('admin-login-screen').style.display='flex';
+  document.getElementById('admin-dashboard').style.display='none';
+}
+
+function switchPanel(name, el) {
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+function renderChartBars() {
+  const vals = [8200,9800,11200,10500,13100,14200];
+  const max = Math.max(...vals);
+  const c = document.getElementById('chart-bars');
+  if (!c) return;
+  c.innerHTML = vals.map((v,i) => `<div class="chart-bar" style="height:${Math.round(v/max*80)}%" data-val="₹${(v/100).toFixed(1)}L"></div>`).join('');
+}
+
+const modalContents = {
+  consult:`<div class="section-tag">Free Service</div><h2>Book a Consultation</h2><p>Speak with one of our expert agents about buying, selling, or investing in Chennai real estate.</p><div class="form-group"><label>Full Name</label><input placeholder="Your name"></div><div class="form-group"><label>Phone</label><input placeholder="+91 98400 00100"></div><div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div><div class="form-group"><label>How can we help?</label><select><option>Buy a Home</option><option>Sell My Home</option><option>Home Valuation</option><option>Investment Advice</option></select></div><button class="btn-submit" onclick="showSuccess(this,'Consultation Booked! We will call you within 1 hour.')">Book Consultation →</button>`,
+  valuation:`<div class="section-tag">Free Service</div><h2>Free Home Valuation</h2><p>Get a professional estimate of your home's market value — no obligation, no pressure, 100% free.</p><div class="form-group"><label>Property Address</label><input placeholder="123 Main St, Chennai, TN"></div><div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div><div class="form-group"><label>Phone</label><input placeholder="+91 98400 00100"></div><button class="btn-submit" onclick="showSuccess(this,'Request Received! Your valuation report will arrive within 24 hours.')">Get Free Valuation →</button>`,
+  guide:`<div class="section-tag">Free Download</div><h2>Buyer's Guide 2025</h2><p>Download our comprehensive 40-page guide to buying a home in Chennai — written by our expert agents.</p><div class="form-group"><label>Full Name</label><input placeholder="Your name"></div><div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div><button class="btn-submit" onclick="showSuccess(this,'Download link sent to your email!')">📄 Download Free Guide →</button>`,
+  'add-listing':`<div class="section-tag">Admin</div><h2>Add New Listing</h2><div class="form-group"><label>Property Address</label><input placeholder="Street address"></div><div class="form-group"><label>Listing Price</label><input placeholder="₹0,00,00,000"></div><div class="form-group"><label>Property Type</label><select><option>House</option><option>Condo</option><option>Townhouse</option><option>Penthouse</option></select></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div class="form-group"><label>Bedrooms</label><input type="number" placeholder="3"></div><div class="form-group"><label>Bathrooms</label><input type="number" placeholder="2"></div></div><div class="form-group"><label>Assign Agent</label><select><option>Sarah Collins</option><option>James Park</option><option>Elena Rodriguez</option><option>Michael Wells</option></select></div><button class="btn-submit" onclick="showSuccess(this,'Listing Added Successfully!')">Add Listing →</button>`
+};
+
+function openModal(type) {
+  document.getElementById('modal-content').innerHTML = modalContents[type] || '';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function closeModalBg(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function showSuccess(btn, msg) {
+  const orig = btn.textContent;
+  btn.textContent = '✓ ' + msg;
+  btn.style.background = 'var(--success)';
+  btn.style.color = 'var(--white)';
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.style.background = '';
+    btn.style.color = '';
+    closeModal();
+  }, 2500);
+}
+
+// Init
+renderProperties('featured-grid', properties, 3);
+calcMortgage();
+</script>
+</body>
+</html>
